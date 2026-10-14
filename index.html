@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0d12">
+    <meta name="description" content="Punarnirmanam — build yourself, one day at a time.">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <title>Punarnirmanam — Habit Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app" id="appRoot">
+        <div class="shell">
+            <header class="topbar">
+                <div class="brand">
+                    <div class="mark">P.</div>
+                    <div>
+                        <div class="brandname">Punarnirmanam</div>
+                        <div class="tagline">Become, one day at a time</div>
+                    </div>
+                </div>
+                <div class="top-right"><span class="date-label" id="topDate"></span>
+                    <div class="avatar">P</div>
+                </div>
+            </header>
+            <div class="layout">
+                <aside class="sidebar">
+                    <div class="nav-label">Workspace</div><button class="nav active" data-page="today"><span
+                            class="ico">◷</span>Today</button><button class="nav" data-page="calendar"><span
+                            class="ico">▦</span>Calendar</button><button class="nav" data-page="statistics"><span
+                            class="ico">▥</span>Statistics</button><button class="nav" data-page="habits"><span
+                            class="ico">☷</span>Manage habits</button>
+                    <div class="side-note">
+                        <div class="mini-kicker">A gentle reminder</div><strong>Small steps still count.</strong>
+                        <p>You don't need a perfect day. You just need a next step.</p>
+                    </div>
+                </aside>
+                <main class="main">
+                    <nav class="mobile-nav"><button class="nav active" data-page="today">◷ Today</button><button
+                            class="nav" data-page="calendar">▦ Calendar</button><button class="nav"
+                            data-page="statistics">▥ Stats</button><button class="nav" data-page="habits">☷
+                            Habits</button></nav>
+                    <section class="page active" id="page-today">
+                        <div class="welcome">
+                            <div>
+                                <div class="eyebrow" id="todayEyebrow">YOUR DAILY RESET</div>
+                                <h1 id="greeting">Make today count.</h1>
+                                <p id="welcomeSub">Progress is built one small promise at a time.</p>
+                            </div><button class="primary" id="addTop">＋ Add a habit</button>
+                        </div>
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="stat-top">Completed today <span class="stat-icon">✓</span></div>
+                                <div class="stat-value" id="completedStat">0/0</div>
+                                <div class="stat-foot" id="completedFoot">Start with one small win</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-top">Completion rate <span class="stat-icon">◉</span></div>
+                                <div class="stat-value" id="rateStat">0%</div>
+                                <div class="stat-foot">For today's habits</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-top">Best active streak <span class="stat-icon">♨</span></div>
+                                <div class="stat-value" id="streakStat">0 <small
+                                        style="font-size:13px;letter-spacing:0">days</small></div>
+                                <div class="stat-foot">Keep showing up</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-top">Total check-ins <span class="stat-icon">✦</span></div>
+                                <div class="stat-value" id="totalStat">0</div>
+                                <div class="stat-foot">Every check-in matters</div>
+                            </div>
+                        </div>
+                        <div class="content-grid">
+                            <section class="panel">
+                                <div class="panel-head">
+                                    <div>
+                                        <h2>Today's habits</h2>
+                                        <div class="panel-sub" id="habitSubtitle">Your daily promises</div>
+                                    </div><button class="text-btn" data-goto="habits">Manage →</button>
+                                </div>
+                                <div class="habit-list" id="todayHabits"></div>
+                            </section>
+                            <section class="panel">
+                                <div class="panel-head">
+                                    <div>
+                                        <h2>Daily progress</h2>
+                                        <div class="panel-sub">Your consistency, at a glance</div>
+                                    </div><span style="color:var(--accent);font-size:20px">◉</span>
+                                </div>
+                                <div class="ring-area">
+                                    <div class="ring"><svg viewBox="0 0 120 120" aria-hidden="true">
+                                            <circle cx="60" cy="60" r="49" fill="none" stroke="var(--line)"
+                                                stroke-width="9" />
+                                            <circle id="ringProgress" cx="60" cy="60" r="49" fill="none"
+                                                stroke="var(--accent)" stroke-width="9" stroke-linecap="round"
+                                                stroke-dasharray="308" stroke-dashoffset="308" />
+                                        </svg>
+                                        <div class="ring-copy"><strong id="ringPct">0%</strong><span>COMPLETED</span>
+                                        </div>
+                                    </div>
+                                    <div class="ring-details"><strong id="ringMessage">A fresh start</strong><span
+                                            id="ringDetail">Choose one habit to begin.</span></div>
+                                </div>
+                                <div class="legend">
+                                    <div class="legend-row"><span class="dot"></span>Completed <span class="val"
+                                            id="legendDone">0</span></div>
+                                    <div class="legend-row"><span class="dot"
+                                            style="background:var(--purple)"></span>Still to do <span class="val"
+                                            id="legendLeft">0</span></div>
+                                </div>
+                            </section>
+                        </div>
+                        <section class="panel week-panel">
+                            <div class="panel-head">
+                                <div>
+                                    <h2>This week</h2>
+                                    <div class="panel-sub">A little progress, every day</div>
+                                </div><button class="text-btn" data-goto="calendar">Full calendar →</button>
+                            </div>
+                            <div class="week-grid" id="weekGrid"></div>
+                        </section>
+                    </section>
+                    <section class="page" id="page-calendar">
+                        <div class="welcome">
+                            <div>
+                                <div class="eyebrow">YOUR JOURNEY</div>
+                                <h1>Habit calendar</h1>
+                                <p>See the days you showed up.</p>
+                            </div>
+                        </div>
+                        <section class="panel">
+                            <div class="panel-head">
+                                <div>
+                                    <h2>Monthly overview</h2>
+                                    <div class="panel-sub">Bright marks show completed habits</div>
+                                </div>
+                                <div class="calendar-controls"><button class="secondary" id="prevMonth"
+                                        aria-label="Previous month">‹</button><strong id="monthLabel"></strong><button
+                                        class="secondary" id="nextMonth" aria-label="Next month">›</button></div>
+                            </div>
+                            <div class="calendar-grid" id="calendarGrid"></div>
+                            <div class="calendar-detail" id="calendarDetail">Select a date to see your check-ins.</div>
+                        </section>
+                    </section>
+                    <section class="page" id="page-statistics">
+                        <div class="welcome">
+                            <div>
+                                <div class="eyebrow">YOUR MOMENTUM</div>
+                                <h1>Progress, not perfection.</h1>
+                                <p>Your habits tell a story. Keep writing it.</p>
+                            </div>
+                        </div>
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="stat-top">Last 7 days <span class="stat-icon">▥</span></div>
+                                <div class="stat-value" id="weekRate">0%</div>
+                                <div class="stat-foot">Average daily completion</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-top">This month <span class="stat-icon">▦</span></div>
+                                <div class="stat-value" id="monthCount">0</div>
+                                <div class="stat-foot">Habit check-ins</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-top">Best streak <span class="stat-icon">♨</span></div>
+                                <div class="stat-value" id="bestStreak">0 days</div>
+                                <div class="stat-foot">Across your habits</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-top">Active habits <span class="stat-icon">✦</span></div>
+                                <div class="stat-value" id="activeCount">0</div>
+                                <div class="stat-foot">Promises you're building</div>
+                            </div>
+                        </div>
+                        <section class="panel">
+                            <div class="panel-head">
+                                <div>
+                                    <h2>Last 7 days</h2>
+                                    <div class="panel-sub">Completed habits by day</div>
+                                </div>
+                            </div>
+                            <div class="chart" id="weekChart"></div>
+                        </section>
+                        <section class="panel week-panel">
+                            <div class="panel-head">
+                                <div>
+                                    <h2>Habit consistency</h2>
+                                    <div class="panel-sub">Completion rate over the last 30 days</div>
+                                </div>
+                            </div>
+                            <div class="manage-list" id="consistencyList"></div>
+                        </section>
+                    </section>
+                    <section class="page" id="page-habits">
+                        <div class="welcome">
+                            <div>
+                                <div class="eyebrow">MAKE IT YOURS</div>
+                                <h1>Your habits</h1>
+                                <p>Add, rename, or remove the habits that matter to you.</p>
+                            </div><button class="primary" id="addManage">＋ New habit</button>
+                        </div>
+                        <section class="panel">
+                            <div class="panel-head">
+                                <div>
+                                    <h2>Habit library</h2>
+                                    <div class="panel-sub" id="manageSubtitle">Your personal routine</div>
+                                </div>
+                            </div>
+                            <div class="manage-list" id="manageList"></div>
+                            <div style="display:flex;justify-content:flex-end;margin-top:18px"><button class="secondary"
+                                    id="resetDemo">Reset sample data</button><button class="secondary" id="importData">
+                                    Import backup
+                                </button>
+                                <input type="file" id="importFile" accept=".json,application/json" hidden /><button
+                                    class="secondary" id="exportData">
+                                    Export backup
+                                </button>
+                            </div>
+                        </section>
+                    </section>
+                    <div class="footer">Punarnirmanam · Start again, as many times as you need.</div>
+                </main>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <form class="modal" id="habitForm">
+            <h2 id="modalTitle">Create a habit</h2>
+            <p>Keep it clear, small, and achievable.</p>
+            <div class="field"><label for="habitName">Habit name</label><input id="habitName" maxlength="50"
+                    placeholder="e.g. Read 10 pages" required></div>
+            <div class="field-row">
+                <div class="field"><label for="habitEmoji">Icon / emoji</label><input id="habitEmoji" maxlength="4"
+                        value="✨" required></div>
+                <div class="field"><label for="habitCategory">Category</label><select id="habitCategory">
+                        <option>Personal</option>
+                        <option>Study</option>
+                        <option>Fitness</option>
+                        <option>Wellbeing</option>
+                        <option>Creative</option>
+                    </select></div>
+            </div>
+
+            <div class="field">
+                <label for="habitSchedule">Habit schedule</label>
+                <select id="habitSchedule">
+                    <option value="daily">Every day</option>
+                    <option value="weekdays">Weekdays (Mon–Fri)</option>
+                    <option value="custom">Choose specific days</option>
+                </select>
+            </div>
+
+            <div class="field" id="customDaysField" hidden>
+                <label>Choose your days</label>
+                <div class="schedule-days">
+                    <label><input type="checkbox" name="habitDay" value="1"> Mon</label>
+                    <label><input type="checkbox" name="habitDay" value="2"> Tue</label>
+                    <label><input type="checkbox" name="habitDay" value="3"> Wed</label>
+                    <label><input type="checkbox" name="habitDay" value="4"> Thu</label>
+                    <label><input type="checkbox" name="habitDay" value="5"> Fri</label>
+                    <label><input type="checkbox" name="habitDay" value="6"> Sat</label>
+                    <label><input type="checkbox" name="habitDay" value="0"> Sun</label>
+                </div>
+            </div>
+
+            <div class="modal-actions"><button type="button" class="secondary" id="cancelModal">Cancel</button><button
+                    class="primary" type="submit">Save habit</button></div>
+        </form>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <script src="script.js" defer></script>
+    <script>if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) { window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => { })); }</script>
+</body>
+
+</html>
